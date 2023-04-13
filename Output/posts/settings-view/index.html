@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta property="og:site_name" content="Sima's Swifty Blog"/><link rel="canonical" href="https://www.simanerush.com/posts/settings-view"/><meta name="twitter:url" content="https://www.simanerush.com/posts/settings-view"/><meta property="og:url" content="https://www.simanerush.com/posts/settings-view"/><title>How to create a generic expandable settings view with SwiftUI | Sima's Swifty Blog</title><meta name="twitter:title" content="How to create a generic expandable settings view with SwiftUI | Sima's Swifty Blog"/><meta property="og:title" content="How to create a generic expandable settings view with SwiftUI | Sima's Swifty Blog"/><meta name="description" content="Learn how to create a Settings View with SwiftUI"/><meta name="twitter:description" content="Learn how to create a Settings View with SwiftUI"/><meta property="og:description" content="Learn how to create a Settings View with SwiftUI"/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to Sima's Swifty Blog"/></head><body class="item-page"><header><div class="wrapper"><a href="/" class="site-name">Sima's Swifty Blog</a></div></header><div class="wrapper"><article><div class="content"><h1>How to create a generic expandable settings view with SwiftUI</h1><p>Recently, I was faced with a task to create a settings view for my app. I wanted to create a minimal settings view implementation that would look like the native settings app on iOS.</p><p>In this article, we will create a generic and expandable settings view for your iOS app! With a couple of lines of code, you will easily be able to create a new setting.</p><p>My app does not require a lot of settings at the moment, but I have created the setup to be able to easily add new settings once I am done implementing them. Follow along to learn how to create this settings screen!</p><p>The code is available in this <a href="https://github.com/simanerush/settings-tutorial">GitHub repository</a>.</p><img src="../../settingsview.png" alt="Screenshot of a Settings View" style="zoom:30%;" /><h2>Before we start</h2><p>We will be working in two files: <code>SettingsView.swift</code> and <code>RootSettingView.swift</code>. The first one will be displaying our settings, and the <code>RootSettingView</code> will be responsible for displaying the detailed setting screen after the user taps one of the settings.</p><h2>Setting up the struct</h2><p>For this to work, we will only need to implement one <code>Setting</code> struct. The end goal is to be able to loop through each of the settings using a <code>ForEach</code> to display all of them. Thus, our <code>Setting</code> needs to conform to the <code>Hashable</code> protocol. Thankfully, each of our properties are already hashable, so we do not need to do anything extra for this to work.</p><pre><code><span class="keyword">struct</span> Setting: <span class="type">Hashable</span> {
+  <span class="keyword">let</span> title: <span class="type">String</span>
+  <span class="keyword">let</span> color: <span class="type">Color</span>
+  <span class="keyword">let</span> imageName: <span class="type">String</span>
+}
+</code></pre><p>As you can see, our <code>Setting</code> will have three properties—<code>title</code>,<code>color</code>, and <code>imageName</code>.</p><h2>Declaring the settings</h2><p>Once we have our srtuct set up, we can declare a <code>settings</code> variable in a <code>SettingsView.swift</code> file.</p><pre><code><span class="keyword">let</span> settings: <span class="type">Array</span>&lt;<span class="type">Setting</span>&gt; = [
+    <span class="type">Setting</span>(title: <span class="string">"theme"</span>, color: .<span class="dotAccess">red</span>, imageName: <span class="string">"heart.square.fill"</span>),
+    <span class="type">Setting</span>(title: <span class="string">"widget"</span>, color: .<span class="dotAccess">yellow</span>, imageName: <span class="string">"star.square.fill"</span>),
+    <span class="type">Setting</span>(title: <span class="string">"some other setting"</span>, color: .<span class="dotAccess">green</span>, imageName: <span class="string">"location.square.fill"</span>),
+    <span class="type">Setting</span>(title: <span class="string">"another setting"</span>, color: .<span class="dotAccess">gray</span>, imageName: <span class="string">"bookmark.square.fill"</span>)
+]
+</code></pre><p>Here, we declare an <code>Array</code> of type <code>Setting</code> that only has four settings. They have a title, a color, and a name for the image.</p><p>The <strong>title</strong> is what the setting will be called in our settings list, the <strong>color</strong> parameter is the color of the icon, and the <strong>image name</strong> is the name of the icon from <a href="https://developer.apple.com/sf-symbols/">SF Symbols</a>.</p><h2>Displaying the icons</h2><p>You probably already want to just write the <code>ForEach</code> to display these, but there is something else we need to do. To make the settings look more like the native Settings app, we need to be able to apply the color to the settings icon. This is why we passed both color and the image name when we created our <code>settings</code> array. Let's write a <code>View</code> that will apply our desired color to the given icon!</p><pre><code><span class="keyword">struct</span> SettingImage: <span class="type">View</span> {
+  <span class="keyword">let</span> color: <span class="type">Color</span>
+  <span class="keyword">let</span> imageName: <span class="type">String</span>
+  
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="type">Image</span>(systemName: imageName)
+      .<span class="call">resizable</span>()
+      .<span class="call">foregroundStyle</span>(color)
+      .<span class="call">frame</span>(width: <span class="number">25</span>, height: <span class="number">25</span>)
+  }
+}
+</code></pre><p>Here, we take in our <code>color</code> and <code>imageName</code> and initialize an <code>Image</code> with that name, and apply the <code>foregroundStyle()</code> modifier to apply our color. It is that simple 😅</p><h2>Almost there ... routing the settings</h2><p>Now, let's zoom out from our <code>SettingsView</code> and create a new file <code>RootSettingView</code>. This file will be responsible for sending the user to the right setting detail view once they tap on a given setting. Since we only have 4 settings, the view is really simple:</p><pre><code><span class="keyword">struct</span> RootSettingView: <span class="type">View</span> {
+  <span class="keyword">let</span> viewToDisplay: <span class="type">String</span>
+  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="keyword">switch</span> viewToDisplay {
+    <span class="keyword">case</span> <span class="string">"theme"</span>:
+      <span class="type">ThemeSettingView</span>()
+    <span class="keyword">case</span> <span class="string">"widget"</span>:
+      <span class="type">WidgetSettingView</span>()
+    <span class="keyword">case</span> <span class="string">"some other setting"</span>:
+      <span class="type">SomeOtherSettingView</span>()
+    <span class="keyword">case</span> <span class="string">"another setting"</span>:
+      <span class="type">AnotherSettingView</span>()
+    <span class="keyword">default</span>:
+      <span class="type">RootSettingView</span>(viewToDisplay: <span class="string">""</span>)
+    }
+  }
+}
+</code></pre><p>Here, we are using a <code>switch</code> statement to display the right view. For example, if we want to display <code>ThemeSettingView</code>, we will pass <code>theme</code> string to our <code>RootSettingView</code>. This will make more sense once we will complete the last step!</p><h2>Finally ... displaying the settings!</h2><p>Okay, back to our <code>SettingsView</code>. We have not done anything in it yet, so let's write some code! As you might have guessed, we will need to use a <code>ForEach</code> loop and a <code>NavigationStack</code> since in the real app, this will really be the only context in which you would use a settings view.</p><pre><code><span class="type">NavigationStack</span> {
+  <span class="type">List</span> {
+    <span class="type">ForEach</span>(settings, id: \.<span class="keyword">self</span>) { setting <span class="keyword">in</span> 
+      <span class="comment">// TODO</span>
+       }             
+      }
+  .<span class="call">navigationTitle</span>(<span class="string">"settings"</span>)
+}
+</code></pre><p>Here, we just loop through our <code>settings</code> array, so let's display them now! Inside this <code>ForEach</code>, write</p><pre><code><span class="type">NavigationLink</span>(destination: <span class="type">RootSettingView</span>(viewToDisplay: setting.<span class="property">title</span>)) {
+  <span class="type">HStack</span> {
+    <span class="type">SettingImage</span>(color: setting.<span class="property">color</span>, imageName: setting.<span class="property">imageName</span>)
+    <span class="type">Text</span>(setting.<span class="property">title</span>)
+  }
+}
+</code></pre><p>Each item in our list will be a link to a <code>RootSettingView</code>! We also pass a title for a setting being displayed as a parameter to <code>viewToDisplay</code>. As you might remember, the <code>RootSettingView</code> is set up in such a way that it displays the correct view depending on the string it gets. So, we will always display the right setting on tap.</p><p>And finally, the <code>HStack</code> has an image and a text, which is our setting cell.</p><h2>Conclusion</h2><p>With this setup, you can now easily add new settings by adding a <code>Setting</code> object to our array, and then adding a new case to the <code>switch</code> statement in the <code>RootSettingView</code>!</p><p>Thank you for reading, and I hope you enjoyed this article! 💛</p></div><span>Tagged with: </span><ul class="tag-list"><li><a href="/tags/swiftui">SwiftUI</a></li></ul></article></div><footer><p>© Sima Nerush 2023</p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>
