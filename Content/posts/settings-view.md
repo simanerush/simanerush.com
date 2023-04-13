@@ -13,7 +13,7 @@ My app does not require a lot of settings at the moment, but I have created the 
 
 The code is available in this [GitHub repository](https://github.com/simanerush/settings-tutorial).
 
-<img src="../../settingsview.png" alt="Screenshot of a Settings View" style="zoom:30%;" />
+<img src="../../images/settingsview.png" alt="Screenshot of a Settings View" style="zoom:30%;" />
 
 ## Before we start
 

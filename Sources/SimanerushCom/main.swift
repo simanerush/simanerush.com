@@ -19,7 +19,7 @@ struct SimanerushCom: Website {
   var name = "Sima's Swifty Blog"
   var description = "A collection of Swift and iOS Development articles by Sima Nerush"
   var language: Language { .english }
-  var imagePath: Path? { nil }
+  var imagePath: Path? { "images/logo.png" }
   var favicon: Favicon? { .init() }
 }
 
