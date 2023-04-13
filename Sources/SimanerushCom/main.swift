@@ -31,5 +31,5 @@ try SimanerushCom().publish(using: [
   .generateHTML(withTheme: .swifty),
   .generateRSSFeed(including: [.posts]),
   .generateSiteMap(),
-  .deploy(using: .gitHub("simanerush/simanerush.com", useSSH: true)),
+  .deploy(using: .gitHub("simanerush/publish-output", useSSH: true)),
 ])

@@ -225,6 +225,10 @@ private struct SiteFooter: Component {
                 Text("© Sima Nerush 2023")
             }
             Paragraph {
+                Text("Generated using ")
+                Link("Publish", url: "https://github.com/johnsundell/publish")
+            }
+            Paragraph {
                 Link("RSS feed", url: "/feed.rss")
             }
         }
