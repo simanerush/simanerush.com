@@ -7,7 +7,7 @@
 body {
     background: #fff;
     color: #000;
-    font-family: Helvetica, Arial;
+    font-family: SF Pro Rounded, SF Compact Rounded;
     text-align: center;
 }
 
@@ -20,7 +20,7 @@ body {
 }
 
 header {
-    background-color: #eee;
+    background-color: #f7d794;
 }
 
 header .wrapper {
@@ -34,7 +34,7 @@ header a {
 }
 
 header .site-name {
-    font-size: 1.5em;
+    font-size: 2em;
     color: #000;
     font-weight: bold;
 }
@@ -152,7 +152,7 @@ footer {
     }
 
     header {
-        background-color: #000;
+        background-color: #ffb142;
     }
 }
 

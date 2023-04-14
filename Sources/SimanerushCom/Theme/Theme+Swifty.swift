@@ -222,10 +222,7 @@ private struct SiteFooter: Component {
     var body: Component {
         Footer {
             Paragraph {
-                Text("© Sima Nerush 2023")
-            }
-            Paragraph {
-                Text("Generated using ")
+                Text("© Sima Nerush 2023 💛 Generated using ")
                 Link("Publish", url: "https://github.com/johnsundell/publish")
             }
             Paragraph {
