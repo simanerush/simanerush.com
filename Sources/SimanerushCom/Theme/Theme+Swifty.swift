@@ -26,10 +26,7 @@ private struct SwiftyHTMLFactory<Site: Website>: HTMLFactory {
             .body {
                 SiteHeader(context: context, selectedSelectionID: nil)
                 Wrapper {
-                    H1(index.title)
-                    Paragraph(context.site.description)
-                        .class("description")
-                    H2("Latest content")
+                    H2(index.title)
                     ItemList(
                         items: context.allItems(
                             sortedBy: \.date,
