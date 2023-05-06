@@ -6,12 +6,6 @@
 
 @font-face {
   font-family: SF Pro Display;
-  src: url("/fonts/SF-Pro-Display-Light.otf") format("opentype");
-  font-weight: lighter;
-}
-
-@font-face {
-  font-family: SF Pro Display;
   src: url("/fonts/SF-Pro-Display-Bold.otf") format("opentype");
   font-weight: bold;
 }
@@ -20,12 +14,6 @@
   font-family: SF Pro Text;
   src: url("/fonts/SF-Pro-Text-Regular.otf") format("opentype");
   font-weight: normal;
-}
-
-@font-face {
-  font-family: SF Pro Text;
-  src: url("/fonts/SF-Pro-Text-Light.otf") format("opentype");
-  font-weight: lighter;
 }
 
 @font-face {
@@ -42,14 +30,14 @@
 
 @font-face {
   font-family: SF Pro Rounded;
-  src: url("/fonts/SF-Pro-Rounded-Light.otf") format("opentype");
-  font-weight: lighter;
+  src: url("/fonts/SF-Pro-Rounded-Bold.otf") format("opentype");
+  font-weight: bold;
 }
 
 @font-face {
-  font-family: SF Pro Rounded;
-  src: url("/fonts/SF-Pro-Rounded-Bold.otf") format("opentype");
-  font-weight: bold;
+  font-family: SF Mono;
+  src: url("/fonts/SF-Mono-Medium.otf") format("opentype");
+  font-weight: normal;
 }
 
 
@@ -121,6 +109,19 @@ h2 {
 
 p {
   margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+code {
+  font-family: SF Mono;
+  display: inline-block;
+  color: #a9bcbc;
+  background-color: #1a1a1a;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.9em;
+  margin: 1px;
+  line-break: anywhere;
 }
 
 a {
@@ -208,12 +209,12 @@ pre {
 }
 
 pre code {
-  font-family: monospace;
+  font-family: SF Mono;
   display: block;
   padding: 0 20px;
   color: #a9bcbc;
   line-height: 1.4em;
-  font-size: 0.95em;
+  font-size: 1em;
   overflow-x: auto;
   white-space: pre;
   -webkit-overflow-scrolling: touch;

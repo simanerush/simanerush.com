@@ -9,9 +9,7 @@ tags: SwiftUI, Transferable
 
 A new CoreTransferable framework makes it easy to share data in SwiftUI with `ShareLink`. 
 
-*To learn more about sharing data and `Transferable` protocol, check out this [article](https://swiftwithmajid.com/2023/03/28/sharing-content-in-swiftui/) by Majid Jabrayilov.*
-
-In this article though, we will be talking about sharing files using `ShareLink`, while preserving their name and extension. Let's look at how to share a PDF file.
+In this article, we will be talking about sharing files using `ShareLink`, while preserving their name and extension. Let's look at how to share a PDF file.
 
 ## Before we start
 
@@ -25,7 +23,7 @@ Don't forget to import `PDFKit`!
 @State private var previewImage: Image = Image("")
 @State private var filename: String
 ```
-Here, we are defining properies of our view that will be required for populating the `ShareLink`. But, there's one more thing we need to implement before we can populate these propertie sof our view!
+Here, we are defining properies of our view that will be required for populating the `ShareLink`. But, there's one more thing we need to implement before we can populate them!
 
 ## Implementing a preview image for our PDF
 
@@ -61,7 +59,7 @@ Now, we have an image that we can pass to the `ShareLink`!
 
 ## Creating the PDF
 
-In our view's `.onApper` modifier, we can create our file and its image like so:
+In our view's `.onAppear` modifier, we can create our file and its image like so:
 
 ```
 .onAppear {
@@ -83,7 +81,7 @@ The most important part is to set the title attribute to our PDF's name. This is
 
 ## Getting a PDF's title
 
-As we have seen, it is not really convenient to access a title of a given PDF, because it is stored in its metadata and is of type `Optional<Dictionary<AnyHashable, Any>>`, which is not really convenient. 
+As we have seen, it is not really convenient to access a title of a given PDF, because it is stored in its metadata and is of type `Optional<Dictionary<AnyHashable, Any>>`. 
 
 Because of that, let's write another function that will extend the `PDFDocument` to get its title.
 
@@ -151,3 +149,4 @@ Finally, we can create a `ShareLink` in our view and place it in the Toolbar.
 
 This will successfully present a share sheet with a correct name for the PDF and a preview image! Note that once you save it, the name of the file will be preserved, too!
 
+Thank you for reading, and I hope you enjoyed this article! 💛
