@@ -256,3 +256,22 @@ pre code .preprocessing {
   color: #b68a00;
 }
 
+.all-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-item: center;
+  height: 42px;
+}
+
+.special-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.link-image {
+  height: 30px;
+  display: inline-block;
+  filter: invert(1);
+}
